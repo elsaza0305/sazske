@@ -98,6 +98,13 @@ const createSkeleton = (data) => {
 
 	// Create Folders
 	shelljs.mkdir('-p', [
+		`${path__proyect}/src/assets/images`,
+		`${path__proyect}/src/assets/files`,
+		`${path__proyect}/src/assets/fonts`,
+		`${path__proyect}/src/data`,
+		`${path__proyect}/src/js/functions`,
+		`${path__proyect}/src/js/modules`,
+		`${path__proyect}/src/js/vendor`,
 		`${path__proyect}/src/${path__proyect__SASS}/components`,
 		`${path__proyect}/src/${path__proyect__SASS}/fonts`,
 		`${path__proyect}/src/${path__proyect__SASS}/layout`,
@@ -106,13 +113,7 @@ const createSkeleton = (data) => {
 		`${path__proyect}/src/${path__proyect__SASS}/pages`,
 		`${path__proyect}/src/${path__proyect__SASS}/variables`,
 		`${path__proyect}/src/${path__proyect__SASS}/vendor`,
-		`${path__proyect}/src/views`,
-		`${path__proyect}/src/js/functions`,
-		`${path__proyect}/src/js/modules`,
-		`${path__proyect}/src/js/vendor`,
-		`${path__proyect}/src/assets/images`,
-		`${path__proyect}/src/assets/files`,
-		`${path__proyect}/src/assets/fonts`
+		`${path__proyect}/src/views`
 	]);
 
 	if (html_pcs !== 'none') {
@@ -220,6 +221,14 @@ const createSkeleton = (data) => {
 	}
 
 
+	
+
+
+	// Add ENV file
+	shelljs.cp(`${path__app}/env/${sass_ext.substring(1, 5)}.env`, `${path__proyect}`);
+	// Rename -> [ .env ]
+	shelljs.mv(`${path__proyect}/${sass_ext.substring(1, 5)}.env`, `${path__proyect}/.env`);
+
 
 
 
@@ -238,8 +247,19 @@ const createSkeleton = (data) => {
 
 
 
-	// Add [ package.json ]
-	shelljs.cp(`${path__app}/package.json`, `${path__proyect}`);
+	// Add package.json
+	shelljs.cp(`${path__app}/package/package-${html_pcs}.json`, `${path__proyect}`);
+	// Rename -> [ package.json ]
+	shelljs.mv(`${path__proyect}/package-${html_pcs}.json`, `${path__proyect}/package.json`);
+
+
+
+
+
+	// Add Gulpfile
+	shelljs.cp(`${path__app}/gulp/gulpfile-${html_pcs}.js`, `${path__proyect}`);
+	// Rename -> [ gulpfile.json ]
+	shelljs.mv(`${path__proyect}/gulpfile-${html_pcs}.js`, `${path__proyect}/gulpfile.js`);
 
 
 

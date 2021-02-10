@@ -21,22 +21,19 @@ const browserSync = require('browser-sync');
 const server = browserSync.create();
 
 
-
-
-
 // Routes
 const src = {
-	data: `${__dirname}/src/assets/data`,
-	fonts : `${__dirname}/src/assets/fonts`,
-	img : `${__dirname}/src/assets/img`,
-	js : `${__dirname}/src/js`,
-	sass : `${__dirname}/src/${process.env.SASS_EXT}`,
-	src : `${__dirname}/src`,
-	views: `${__dirname}/src/views`,
+	data: './src/assets/data',
+	fonts : './src/assets/fonts',
+	img : './src/assets/img',
+	js : './src/js',
+	sass : `./src/${process.env.SASS_EXT}`,
+	src : './src',
+	views: './src/views',
 }
 
 const dist = process.env.PATH_DIST;
-// End::Routes
+// End Routes
 
 
 // Development Server
