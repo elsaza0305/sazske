@@ -1,6 +1,6 @@
 {
   "name": "sazske-create",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Skeleton generator for workflow frontend development",
   "main": "index.js",
   "scripts": {
@@ -31,5 +31,7 @@
     "shelljs": "^0.8.4",
     "slug": "^4.0.2"
   },
-  "bin": "./index.js"
+  "bin": {
+    "sazske-create": "index.js"
+  }
 }
