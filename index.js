@@ -75,8 +75,8 @@ const createSkeleton = (data) => {
 
 	const { proyect_name, jquery, sass_ext, bootstrap, html_pcs } = data;
 
-	const path__node = './node_modules';
-	const path__app = './app';
+	const path__node = `${__dirname}/node_modules`;
+	const path__app = `${__dirname}/app`;
 	const path__proyect = `${process.cwd()}/${proyect_name}`;
 	const path__proyect__SASS = (sass_ext === '.sass') ? 'sass' : 'scss';
 
