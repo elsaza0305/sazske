@@ -186,7 +186,14 @@ const createSkeleton = (data) => {
 
 
 
-	
+
+
+	// Create JS File
+	shelljs.touch(`${path__proyect}/src/js/app.js`);
+
+
+
+
 
 	// Create Index File
 	let html_ext;

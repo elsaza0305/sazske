@@ -17,6 +17,7 @@
     "autoprefixer": "^9.8.6",
 	"browser-sync": "^2.26.13",
 	"cssnano": "^4.1.10",
+	"dotenv": "^8.2.0",
 	"gulp": "^4.0.2",
 	"gulp-cli": "^2.3.0",
 	"gulp-concat": "^2.6.1",
