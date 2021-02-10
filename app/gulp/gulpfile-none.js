@@ -9,7 +9,7 @@ const postcss = require('gulp-postcss');
 const cssnano = require('cssnano');
 const pxtorem = require('postcss-pxtorem');
 
-const clean = require('gulp-clean-dir');
+const clean = require('gulp-clean');
 const rename = require('gulp-rename');
 const maps = require('gulp-sourcemaps');
 
@@ -90,14 +90,14 @@ gulp.task('clean-dist', () => {
 
 
 
-// Compile EJS
+// Copy HTML
 gulp.task('copy-html', () => {
     return gulp
     	.src(`${src.views}/*.html`)
         .pipe(gulp.dest(dist))
         .pipe(server.stream());
 });
-// END::Compile EJS
+// END::Copy HTML
 
 
 

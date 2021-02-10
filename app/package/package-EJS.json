@@ -19,7 +19,7 @@
 	"cssnano": "^4.1.10",
 	"dotenv": "^8.2.0",
 	"gulp": "^4.0.2",
-	"gulp-clean-dir": "^1.0.2",
+	"gulp-clean": "^0.4.0",
 	"gulp-cli": "^2.3.0",
 	"gulp-concat": "^2.6.1",
 	"gulp-ejs": "^5.1.0",

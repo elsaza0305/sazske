@@ -11,7 +11,7 @@ const pxtorem = require('postcss-pxtorem');
 
 const ejs = require('gulp-ejs');
 
-const clean = require('gulp-clean-dir');
+const clean = require('gulp-clean');
 const rename = require('gulp-rename');
 const maps = require('gulp-sourcemaps');
 

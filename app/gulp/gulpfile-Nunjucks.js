@@ -9,7 +9,7 @@ const postcss = require('gulp-postcss');
 const cssnano = require('cssnano');
 const pxtorem = require('postcss-pxtorem');
 
-const pug = require('gulp-pug');
+const nunjucks = require('gulp-nunjucks-render');
 
 const clean = require('gulp-clean');
 const rename = require('gulp-rename');
@@ -62,7 +62,7 @@ gulp.task('server', () => {
 
 // Watching Files Changed
 gulp.task('watching', () => {
-	gulp.watch(`${src.views}/**/*.pug`, gulp.series('compile-pug'));
+	gulp.watch(`${src.views}/**/*.njk`, gulp.series('compile-nunjucks'));
 	gulp.watch(`${src.sass}/**/*.${process.env.SASS_EXT}`, gulp.series('compile-SASS'));
 	gulp.watch(`${src.js}/vendor/*.js`, gulp.series('js-vendor'));
 	gulp.watch([`${src.js}/modules/*.js`, `${src.js}/app.js`], gulp.series('js-app'));
@@ -92,17 +92,18 @@ gulp.task('clean-dist', () => {
 
 
 
-// Compile PUG
-gulp.task('compile-pug', () => {
+// Compile NUNJUCKS
+gulp.task('compile-nunjucks', () => {
     return gulp
-    	.src(`${src.views}/pages/*.pug`)
-        .pipe(pug({
-            pretty: true
-        }))
+    	.src(`${src.views}/pages/*.njk`)
+    	.pipe(nunjucks({
+    		path: [`${src.views}/templates/`], // String or Array
+    		ext: '.html'
+    	}))
         .pipe(gulp.dest(dist))
         .pipe(server.stream());
 });
-// END::Compile PUG
+// END::Compile NUNJUCKS
 
 
 
@@ -217,7 +218,7 @@ gulp.task('copy-files', () => {
 
 
 // Create Dist Folder
-gulp.task('development', gulp.series('clean-dist', 'compile-pug', 'compile-SASS', 'js-vendor', 'js-app', 'copy-data', 'copy-images', 'copy-fonts', 'copy-files'));
+gulp.task('development', gulp.series('clean-dist', 'compile-nunjucks', 'compile-SASS', 'js-vendor', 'js-app', 'copy-data', 'copy-images', 'copy-fonts', 'copy-files'));
 
 
 // Start Development

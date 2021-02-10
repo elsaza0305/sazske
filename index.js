@@ -61,7 +61,7 @@ const setOptions = () => {
 			name: 'html_pcs',
 			type: 'list',
 			message: 'Select HTML Preprocessor:',
-			choices: ['EJS', 'Handlebars', 'Pug', 'none']
+			choices: ['EJS', 'Nunjucks', 'Pug', 'none']
 		}
 	];
 
@@ -123,6 +123,7 @@ const createSkeleton = (data) => {
 			`${path__proyect}/src/views/layout`,
 			`${path__proyect}/src/views/pages`,
 			`${path__proyect}/src/views/partials`,
+			`${path__proyect}/src/views/templates`
 		]);
 	}
 
@@ -197,27 +198,20 @@ const createSkeleton = (data) => {
 
 
 	// Create Index File
-	let html_ext;
-
-	switch (html_pcs) {
-		case 'EJS':
-			html_ext = '.ejs';
-			break;
-		case 'Handlebars':
-			html_ext = '.hbs';
-			break;
-		case 'Pug':
-			html_ext = '.pug';
-			break;
-		case 'none':
-			html_ext = '.html';
-			break;
+	if (html_pcs === 'EJS') {
+		shelljs.cp(`${path__app}/pages/index.ejs`, `${path__proyect}/src/views/pages`);
 	}
 
-	if (html_ext !== '.html') {
-		shelljs.touch(`${path__proyect}/src/views/pages/index${html_ext}`);
-	} else {
-		shelljs.touch(`${path__proyect}/src/views/index${html_ext}`);
+	if (html_pcs === 'Nunjucks') {
+		shelljs.cp(`${path__app}/pages/index.njk`, `${path__proyect}/src/views/pages`);
+	}
+
+	if (html_pcs === 'Pug') {
+		shelljs.cp(`${path__app}/pages/index.pug`, `${path__proyect}/src/views/pages`);
+	}
+
+	if (html_pcs === 'none') {
+		shelljs.cp(`${path__app}/pages/index.html`, `${path__proyect}/src/views`);
 	}
 
 
