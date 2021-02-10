@@ -106,6 +106,7 @@ const createSkeleton = (data) => {
 		`${path__proyect}/src/js/modules`,
 		`${path__proyect}/src/js/vendor`,
 		`${path__proyect}/src/${path__proyect__SASS}/components`,
+		`${path__proyect}/src/${path__proyect__SASS}/extends`,
 		`${path__proyect}/src/${path__proyect__SASS}/fonts`,
 		`${path__proyect}/src/${path__proyect__SASS}/layout`,
 		`${path__proyect}/src/${path__proyect__SASS}/mixins`,
@@ -119,7 +120,6 @@ const createSkeleton = (data) => {
 	if (html_pcs !== 'none') {
 		shelljs.mkdir('-p', [
 			`${path__proyect}/src/views/components`,
-			`${path__proyect}/src/views/extends`,
 			`${path__proyect}/src/views/layout`,
 			`${path__proyect}/src/views/pages`,
 			`${path__proyect}/src/views/partials`,
