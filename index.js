@@ -23,9 +23,7 @@ const printHeader = () => {
 };
 
 
-
-
-const setOptions = () => {
+const setInitialOptions = () => {
 	const questions = [
 		{
 			name: 'proyect_name',
@@ -40,15 +38,41 @@ const setOptions = () => {
 			}
 		},
 		{
-			name: 'jquery',
+			name: 'type_proyect',
 			type: 'list',
-			message: 'Include JQuery?',
-			choices: ['no', 'yes']
+			message: 'Select type proyect:',
+			choices: ['big', 'small']
 		},
 		{
 			name: 'bootstrap',
 			type: 'list',
 			message: 'Include Bootstrap?',
+			choices: ['no', 'yes']
+		}
+	];
+
+	return inquirer.prompt(questions);
+};
+
+const setSmallNoBootstrapOptions= () => {
+	const questions = [
+		{
+			name: 'jquery',
+			type: 'list',
+			message: 'Include JQuery?',
+			choices: ['no', 'yes']
+		}
+	];
+
+	return inquirer.prompt(questions);
+}
+
+const setBigNoBootstrapOptions= () => {
+	const questions = [
+		{
+			name: 'jquery',
+			type: 'list',
+			message: 'Include JQuery?',
 			choices: ['no', 'yes']
 		},
 		{
@@ -66,12 +90,138 @@ const setOptions = () => {
 	];
 
 	return inquirer.prompt(questions);
-};
+}
+
+const setBigYesBootstrapOptions= () => {
+	const questions = [
+		{
+			name: 'sass_ext',
+			type: 'list',
+			message: 'Select SASS extension:',
+			choices: ['.scss', '.sass']
+		},
+		{
+			name: 'html_pcs',
+			type: 'list',
+			message: 'Select HTML Preprocessor:',
+			choices: ['EJS', 'Nunjucks', 'Pug', 'none']
+		}
+	];
+
+	return inquirer.prompt(questions);
+}
+
+
+const createSmallSkeleton = (data) => {
+
+	const { proyect_name, jquery, bootstrap } = data;
+
+	const path__node = `${__dirname}/node_modules`;
+	const path__app = `${__dirname}/app`;
+	const path__proyect = `${process.cwd()}/${proyect_name}`;
+	
 
 
 
 
-const createSkeleton = (data) => {
+	// Validate folder name
+	const validateFolder = validateFolderName(path__proyect, proyect_name);
+	if (!validateFolder) return false;
+
+
+
+
+
+	// Create Folders
+	shelljs.mkdir('-p', [
+		`${path__proyect}/assets/images`,
+		`${path__proyect}/assets/files`,
+		`${path__proyect}/assets/fonts`,
+		`${path__proyect}/assets/data`,
+		`${path__proyect}/assets/js`,
+		`${path__proyect}/assets/css`
+	]);
+
+
+
+
+
+	// Add JQuery
+	if (jquery === 'yes') {
+		// Copy file [ jquery.min.js ]
+		shelljs.cp(`${path__node}/jquery/dist/jquery.min.js`, `${path__proyect}/assets/js`);
+	}
+
+
+
+
+
+	// Add Bootstrap
+	if (bootstrap === 'yes') {
+		// Copy file [ bootstrap.css ]
+		shelljs.cp(`${path__node}/bootstrap/dist/css/bootstrap.min.css`, `${path__proyect}/assets/css`);
+
+		// Copy files [ bootstrap.min.js ] and [ jquery.min.js ] 
+		shelljs.cp(`${path__node}/bootstrap/dist/js/bootstrap.min.js`, `${path__proyect}/assets/js`);
+		shelljs.cp(`${path__node}/jquery/dist/jquery.min.js`, `${path__proyect}/assets/js`);
+	}
+
+	if (bootstrap === 'no') {
+		// Copy file [ normalize.css ]
+		shelljs.cp(`${path__node}/normalize.css/normalize.css`, `${path__proyect}/assets/css`);
+	}
+
+
+
+
+
+	// Create JS File
+	shelljs.touch(`${path__proyect}/assets/js/main.js`);
+
+
+
+
+
+	// Create CSS File
+	shelljs.touch(`${path__proyect}/assets/css/stylesheet.css`);
+
+
+
+
+	
+	// Create Index File
+	if (bootstrap === 'yes') {
+		shelljs.cp(`${path__app}/pages/small/bootstrap/index.html`, path__proyect);
+	} else if (jquery === 'yes') {
+		shelljs.cp(`${path__app}/pages/small/jquery/index.html`, path__proyect);
+	} else {
+		shelljs.cp(`${path__app}/pages/small/index.html`, path__proyect);
+	}
+
+
+
+
+
+	// Add Editor Config
+	shelljs.cp(`${path__app}/.editorconfig`, `${path__proyect}`);
+
+
+
+
+
+	// Add README
+	shelljs.cp(`${path__app}/README.md`, `${path__proyect}`);
+
+
+
+
+
+	return true;
+
+}
+
+
+const createBigSkeleton = (data) => {
 
 	const { proyect_name, jquery, sass_ext, bootstrap, html_pcs } = data;
 
@@ -81,20 +231,16 @@ const createSkeleton = (data) => {
 	const path__proyect__SASS = (sass_ext === '.sass') ? 'sass' : 'scss';
 
 
-	// Validate folder name
-	const path__proyectCode = shelljs.find(path__proyect).code;
 
-	if (path__proyectCode === 0) {
-		return false;
-	} else {
-		console.log(
-			chalk.gray.italic(`As the folder "${proyect_name}" doesn't exist the project can be created.`)
-		);
-		console.log(
-			'\n' +
-			chalk.white.bgMagenta.bold('Wait, please...')
-		);
-	}
+
+
+	// Validate folder name
+	const validateFolder = validateFolderName(path__proyect, proyect_name);
+	if (!validateFolder) return false;
+
+
+
+
 
 	// Create Folders
 	shelljs.mkdir('-p', [
@@ -151,8 +297,9 @@ const createSkeleton = (data) => {
 		// Create SASS file [ _vendor ]
 		shelljs.cp(`${path__app}/sass/_vendor${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
 
-		// Copy file [ bootstrap.min.js ]
+		// Copy files [ bootstrap.min.js ] and [ jquery.min.js ] 
 		shelljs.cp(`${path__node}/bootstrap/dist/js/bootstrap.min.js`, `${path__proyect}/src/js/vendor`);
+		shelljs.cp(`${path__node}/jquery/dist/jquery.min.js`, `${path__proyect}/src/js/vendor`);
 	}
 
 	if (bootstrap === 'no') {
@@ -161,7 +308,7 @@ const createSkeleton = (data) => {
 		// Rename [ normalize.css ] -> [ _normalize.scss ]
 		shelljs.mv(`${path__proyect}/src/${path__proyect__SASS}/vendor/normalize.css`, `${path__proyect}/src/${path__proyect__SASS}/vendor/_normalize.scss`);
 
-		// Copy SASS file [ _vendor-null ]
+		// Create SASS file [ _vendor-null ]
 		shelljs.cp(`${path__app}/sass/_vendor-null${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
 		// Rename [ _vendor-null ] -> [ _vendor ]
 		shelljs.mv(`${path__proyect}/src/${path__proyect__SASS}/_vendor-null${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/_vendor${sass_ext}`);
@@ -190,8 +337,8 @@ const createSkeleton = (data) => {
 
 
 
-	// Create JS File
-	shelljs.touch(`${path__proyect}/src/js/app.js`);
+	// Copy JS File
+	shelljs.cp(`${path__app}/js/app.js`, `${path__proyect}/src/js`);
 
 
 
@@ -199,19 +346,50 @@ const createSkeleton = (data) => {
 
 	// Create Index File
 	if (html_pcs === 'EJS') {
-		shelljs.cp(`${path__app}/pages/index.ejs`, `${path__proyect}/src/views/pages`);
+		if (bootstrap === 'yes') {
+			shelljs.cp(`${path__app}/pages/ejs/bootstrap/head.ejs`, `${path__proyect}/src/views/partials`);
+		} else if (jquery === 'yes') {
+			shelljs.cp(`${path__app}/pages/ejs/jquery/head.ejs`, `${path__proyect}/src/views/partials`);
+		} else {
+			shelljs.cp(`${path__app}/pages/ejs/head.ejs`, `${path__proyect}/src/views/partials`);
+		}
+
+		shelljs.cp(`${path__app}/pages/ejs/scripts.ejs`, `${path__proyect}/src/views/partials`);
+		shelljs.cp(`${path__app}/pages/ejs/index.ejs`, `${path__proyect}/src/views/pages`);
 	}
 
 	if (html_pcs === 'Nunjucks') {
-		shelljs.cp(`${path__app}/pages/index.njk`, `${path__proyect}/src/views/pages`);
+		if (bootstrap === 'yes') {
+			shelljs.cp(`${path__app}/pages/njk/bootstrap/default.njk`, `${path__proyect}/src/views/templates`);
+		} else if (jquery === 'yes') {
+			shelljs.cp(`${path__app}/pages/njk/jquery/default.njk`, `${path__proyect}/src/views/templates`);
+		} else {
+			shelljs.cp(`${path__app}/pages/njk/default.njk`, `${path__proyect}/src/views/templates`);
+		}
+
+		shelljs.cp(`${path__app}/pages/njk/index.njk`, `${path__proyect}/src/views/pages`);
 	}
 
 	if (html_pcs === 'Pug') {
-		shelljs.cp(`${path__app}/pages/index.pug`, `${path__proyect}/src/views/pages`);
+		if (bootstrap === 'yes') {
+			shelljs.cp(`${path__app}/pages/pug/bootstrap/default.pug`, `${path__proyect}/src/views/templates`);
+		} else if (jquery === 'yes') {
+			shelljs.cp(`${path__app}/pages/pug/jquery/default.pug`, `${path__proyect}/src/views/templates`);
+		} else {
+			shelljs.cp(`${path__app}/pages/pug/default.pug`, `${path__proyect}/src/views/templates`);
+		}
+
+		shelljs.cp(`${path__app}/pages/pug/index.pug`, `${path__proyect}/src/views/pages`);
 	}
 
 	if (html_pcs === 'none') {
-		shelljs.cp(`${path__app}/pages/index.html`, `${path__proyect}/src/views`);
+		if (bootstrap === 'yes') {
+			shelljs.cp(`${path__app}/pages/none/bootstrap/index.html`, `${path__proyect}/src/views`);
+		} else if (jquery === 'yes') {
+			shelljs.cp(`${path__app}/pages/none/jquery/index.html`, `${path__proyect}/src/views`);
+		} else {
+			shelljs.cp(`${path__app}/pages/none/index.html`, `${path__proyect}/src/views`);
+		}
 	}
 
 
@@ -260,10 +438,8 @@ const createSkeleton = (data) => {
 
 
 	return true;
+
 };
-
-
-
 
 
 const printFinalMessage = (message, type) => {
@@ -282,18 +458,17 @@ const printFinalMessage = (message, type) => {
 	}
 }
 
-
-
-
-
-const run = async () => {
-	printHeader();
-	
-	const data = await setOptions();
-	data.proyect_name = slug(data.proyect_name);
+const createSkeleton = async (data) => {
+	let response;
 
 	try {
-		const response = await createSkeleton(data);
+		if (data.type_proyect === 'big') {
+			response = await createBigSkeleton(data);
+		}
+
+		if (data.type_proyect === 'small') {
+			response = await createSmallSkeleton(data);
+		}
 
 		if (!response) {
 			printFinalMessage(`The folder "${data.proyect_name}" already exists.`, 'error');
@@ -304,6 +479,54 @@ const run = async () => {
 	} catch (error) {
 		printFinalMessage(error, 'error');
 	}
+}
+
+const run = async () => {
+	printHeader();
+	
+	let data = {};
+	data = await setInitialOptions();
+
+	if (data.type_proyect === 'big') {
+		if (data.bootstrap === 'yes') {
+			let response = await setBigYesBootstrapOptions();
+			data = { ...data, ...response, jquery: 'included' };
+		} else {
+			let response = await setBigNoBootstrapOptions();
+			data = { ...data, ...response };
+		}
+	} 
+
+	if (data.type_proyect === 'small') {
+		if (data.bootstrap === 'yes') {
+			data = { ...data, jquery: 'included' };
+		} else {
+			let response = await setSmallNoBootstrapOptions();
+			data = { ...data, ...response };
+		}
+	}
+	
+	data.proyect_name = slug(data.proyect_name);
+
+	createSkeleton(data);
 };
 
 run();
+
+function validateFolderName(path__proyect, proyect_name) {
+	const path__proyectCode = shelljs.find(path__proyect).code;
+
+	if (path__proyectCode === 0) {
+		return false;
+	} else {
+		console.log(
+			chalk.gray.italic(`As the folder "${proyect_name}" doesn't exist the project can be created.`)
+		);
+		console.log(
+			'\n' +
+			chalk.white.bgMagenta.bold('Wait, please...')
+		);
+
+		return true;
+	}
+}
