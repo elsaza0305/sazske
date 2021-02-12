@@ -1,5 +1,3 @@
-'use strict';
-
 const slug = require('slug');
 
 const printHeader = require('./modules/printHeader');
