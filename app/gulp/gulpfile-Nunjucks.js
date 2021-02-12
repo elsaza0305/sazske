@@ -64,8 +64,8 @@ gulp.task('server', () => {
 gulp.task('watching', () => {
 	gulp.watch(`${src.views}/**/*.njk`, gulp.series('compile-nunjucks'));
 	gulp.watch(`${src.sass}/**/*.${process.env.SASS_EXT}`, gulp.series('compile-SASS'));
-	gulp.watch(`${src.js}/vendor/*.js`, gulp.series('js-vendor'));
-	gulp.watch([`${src.js}/modules/*.js`, `${src.js}/app.js`], gulp.series('js-app'));
+	gulp.watch(`${src.js}/vendor/**/*.js`, gulp.series('js-vendor'));
+	gulp.watch([`${src.js}/modules/**/*.js`, `${src.js}/app.js`, `${src.js}/functions/**/*.js`], gulp.series('js-app'));
 	gulp.watch(`${src.data}/*`, gulp.series('copy-data'));
 	gulp.watch(`${src.fonts}/*`, gulp.series('copy-fonts'));
 	gulp.watch(`${src.files}/*`, gulp.series('copy-files'));
@@ -144,14 +144,14 @@ gulp.task('compile-SASS', () => {
 // Tasks JS
 gulp.task('js-vendor', () => {
 	return gulp
-		.src(`${src.js}/vendor/*.js`)
+		.src(`${src.js}/vendor/**/*.js`)
         .pipe(gulp.dest(`${dist}/assets/js`))
         .pipe(server.stream());
 });
 
 gulp.task('js-app', () => {
 	return gulp
-		.src([`${src.js}/modules/*.js`, `${src.js}/app.js`, `${src.js}/functions/*.js`])
+		.src([`${src.js}/modules/**/*.js`, `${src.js}/app.js`, `${src.js}/functions/**/*.js`])
         .pipe(maps.init())
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
