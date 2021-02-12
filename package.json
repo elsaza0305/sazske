@@ -1,6 +1,6 @@
 {
   "name": "sazske-create",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Skeleton generator for workflow frontend development",
   "main": "index.js",
   "scripts": {
@@ -11,17 +11,17 @@
     "url": "git+https://github.com/elsaza0305/sazske.git"
   },
   "keywords": [
-	"autoprefixer",
-	"bootstrap",
-	"browser-sync",
-	"CSS Preprocessor",
-	"cssnano",
-	"gulp-postcss",
-	"gulp-sass",
-	"gulp-uglify-es",
-	"HTML Preprocessor",
-	"jquery",
-	"normalize.css",
+    "autoprefixer",
+    "bootstrap",
+    "browser-sync",
+    "CSS Preprocessor",
+    "cssnano",
+    "gulp-postcss",
+    "gulp-sass",
+    "gulp-uglify-es",
+    "HTML Preprocessor",
+    "jquery",
+    "normalize.css",
     "frontend",
     "gulp",
     "skeleton"
