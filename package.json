@@ -11,9 +11,20 @@
     "url": "git+https://github.com/elsaza0305/sazske.git"
   },
   "keywords": [
-    "Skeleton",
-    "Frontend",
-    "Gulp"
+	"autoprefixer",
+	"bootstrap",
+	"browser-sync",
+	"CSS Preprocessor",
+	"cssnano",
+	"gulp-postcss",
+	"gulp-sass",
+	"gulp-uglify-es",
+	"HTML Preprocessor",
+	"jquery",
+	"normalize.css",
+    "frontend",
+    "gulp",
+    "skeleton"
   ],
   "author": "Dayron Daza",
   "license": "ISC",
