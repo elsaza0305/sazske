@@ -1,3 +1,9 @@
+'use strict';
+
+
+
+
+
 const chalk = require('chalk');
 const figlet = require('figlet');
 const inquirer = require('inquirer');
@@ -8,62 +14,36 @@ const slug = require('slug');
 
 
 
-run();
-
-async function run() {
-	printHeader();
-	
-	let data = {};
-	data = await setInitialOptions();
-
-	if (data.type_proyect === 'big') {
-		if (data.bootstrap === 'yes') {
-			let response = await setBigYesBootstrapOptions();
-			data = { ...data, ...response, jquery: 'included' };
-		} else {
-			let response = await setBigNoBootstrapOptions();
-			data = { ...data, ...response };
-		}
-	} 
-
-	if (data.type_proyect === 'small') {
-		if (data.bootstrap === 'yes') {
-			data = { ...data, jquery: 'included' };
-		} else {
-			let response = await setSmallNoBootstrapOptions();
-			data = { ...data, ...response };
-		}
-	}
-	
-	data.proyect_name = slug(data.proyect_name);
-
-	createSkeleton(data);
+const printHeader = () => {
+	console.log(
+		'\n' +
+		chalk.blueBright(
+			figlet.textSync('SAZSKE', {
+				font: 'Graffiti',
+				horizontalLayout: 'default',
+				verticalLayout: 'default'
+			})
+		) + '\n'
+	);
 };
 
 
 
 
 
-async function createSkeleton(data) {
-	let response;
-
-	try {
-		if (data.type_proyect === 'big') {
-			response = await createBigSkeleton(data);
-		}
-
-		if (data.type_proyect === 'small') {
-			response = await createSmallSkeleton(data);
-		}
-
-		if (!response) {
-			printFinalMessage(`The folder "${data.proyect_name}" already exists.`, 'error');
-			return false;
-		}
-
-		printFinalMessage(`The project "${data.proyect_name}" has been created successfully.`, 'success');
-	} catch (error) {
-		printFinalMessage(error, 'error');
+const printFinalMessage = (message, type) => {
+	if (type === 'success') {
+		console.log(
+			'\n' + chalk.white.bgGreen.bold(message)
+		);
+	} else if (type === 'error') {
+		console.log(
+			'\n' + chalk.white.bgRed.bold(message)
+		);
+	} else {
+		console.log(
+			'\n' + chalk.white.bold(message)
+		);
 	}
 }
 
@@ -71,7 +51,121 @@ async function createSkeleton(data) {
 
 
 
-function createSmallSkeleton(data) {
+const validateFolderName = (path__proyect, proyect_name) => {
+	const path__proyectCode = shelljs.find(path__proyect).code;
+
+	if (path__proyectCode === 0) {
+		return false;
+	} else {
+		console.log(
+			chalk.gray.italic(`As the folder "${proyect_name}" doesn't exist the project can be created.`)
+		);
+		console.log(
+			'\n' +
+			chalk.white.bgMagenta.bold('Wait, please...')
+		);
+
+		return true;
+	}
+}
+
+
+
+
+
+const setInitialOptions = () => {
+	const questions = [
+		{
+			name: 'proyect_name',
+			type: 'input',
+			message: 'Proyect Name:',
+			validate: function (val) {
+				if (val === '') {
+					return false;
+				}
+
+				return true;
+			}
+		},
+		{
+			name: 'type_proyect',
+			type: 'list',
+			message: 'Select type proyect:',
+			choices: ['big', 'small']
+		},
+		{
+			name: 'bootstrap',
+			type: 'list',
+			message: 'Include Bootstrap?',
+			choices: ['no', 'yes']
+		}
+	];
+
+	return inquirer.prompt(questions);
+};
+
+const setSmallNoBootstrapOptions = () => {
+	const questions = [
+		{
+			name: 'jquery',
+			type: 'list',
+			message: 'Include JQuery?',
+			choices: ['no', 'yes']
+		}
+	];
+
+	return inquirer.prompt(questions);
+}
+
+const setBigNoBootstrapOptions = () => {
+	const questions = [
+		{
+			name: 'jquery',
+			type: 'list',
+			message: 'Include JQuery?',
+			choices: ['no', 'yes']
+		},
+		{
+			name: 'sass_ext',
+			type: 'list',
+			message: 'Select SASS extension:',
+			choices: ['.scss', '.sass']
+		},
+		{
+			name: 'html_pcs',
+			type: 'list',
+			message: 'Select HTML Preprocessor:',
+			choices: ['EJS', 'Nunjucks', 'Pug', 'none']
+		}
+	];
+
+	return inquirer.prompt(questions);
+}
+
+const setBigYesBootstrapOptions = () => {
+	const questions = [
+		{
+			name: 'sass_ext',
+			type: 'list',
+			message: 'Select SASS extension:',
+			choices: ['.scss', '.sass']
+		},
+		{
+			name: 'html_pcs',
+			type: 'list',
+			message: 'Select HTML Preprocessor:',
+			choices: ['EJS', 'Nunjucks', 'Pug', 'none']
+		}
+	];
+
+	return inquirer.prompt(questions);
+}
+
+
+
+
+
+const createSmallSkeleton = (data) => {
 
 	const { proyect_name, jquery, bootstrap } = data;
 
@@ -183,7 +277,7 @@ function createSmallSkeleton(data) {
 
 
 
-function createBigSkeleton(data) {
+const createBigSkeleton = (data) => {
 
 	const { proyect_name, jquery, sass_ext, bootstrap, html_pcs } = data;
 
@@ -407,113 +501,26 @@ function createBigSkeleton(data) {
 
 
 
-function setInitialOptions() {
-	const questions = [
-		{
-			name: 'proyect_name',
-			type: 'input',
-			message: 'Proyect Name:',
-			validate: function (val) {
-				if (val === '') {
-					return false;
-				}
+const createSkeleton = async (data) => {
+	let response;
 
-				return true;
-			}
-		},
-		{
-			name: 'type_proyect',
-			type: 'list',
-			message: 'Select type proyect:',
-			choices: ['big', 'small']
-		},
-		{
-			name: 'bootstrap',
-			type: 'list',
-			message: 'Include Bootstrap?',
-			choices: ['no', 'yes']
+	try {
+		if (data.type_proyect === 'big') {
+			response = await createBigSkeleton(data);
 		}
-	];
 
-	return inquirer.prompt(questions);
-};
-
-function setSmallNoBootstrapOptions() {
-	const questions = [
-		{
-			name: 'jquery',
-			type: 'list',
-			message: 'Include JQuery?',
-			choices: ['no', 'yes']
+		if (data.type_proyect === 'small') {
+			response = await createSmallSkeleton(data);
 		}
-	];
 
-	return inquirer.prompt(questions);
-}
-
-function setBigNoBootstrapOptions() {
-	const questions = [
-		{
-			name: 'jquery',
-			type: 'list',
-			message: 'Include JQuery?',
-			choices: ['no', 'yes']
-		},
-		{
-			name: 'sass_ext',
-			type: 'list',
-			message: 'Select SASS extension:',
-			choices: ['.scss', '.sass']
-		},
-		{
-			name: 'html_pcs',
-			type: 'list',
-			message: 'Select HTML Preprocessor:',
-			choices: ['EJS', 'Nunjucks', 'Pug', 'none']
+		if (!response) {
+			printFinalMessage(`The folder "${data.proyect_name}" already exists.`, 'error');
+			return false;
 		}
-	];
 
-	return inquirer.prompt(questions);
-}
-
-function setBigYesBootstrapOptions() {
-	const questions = [
-		{
-			name: 'sass_ext',
-			type: 'list',
-			message: 'Select SASS extension:',
-			choices: ['.scss', '.sass']
-		},
-		{
-			name: 'html_pcs',
-			type: 'list',
-			message: 'Select HTML Preprocessor:',
-			choices: ['EJS', 'Nunjucks', 'Pug', 'none']
-		}
-	];
-
-	return inquirer.prompt(questions);
-}
-
-
-
-
-
-function validateFolderName(path__proyect, proyect_name) {
-	const path__proyectCode = shelljs.find(path__proyect).code;
-
-	if (path__proyectCode === 0) {
-		return false;
-	} else {
-		console.log(
-			chalk.gray.italic(`As the folder "${proyect_name}" doesn't exist the project can be created.`)
-		);
-		console.log(
-			'\n' +
-			chalk.white.bgMagenta.bold('Wait, please...')
-		);
-
-		return true;
+		printFinalMessage(`The project "${data.proyect_name}" has been created successfully.`, 'success');
+	} catch (error) {
+		printFinalMessage(error, 'error');
 	}
 }
 
@@ -521,35 +528,38 @@ function validateFolderName(path__proyect, proyect_name) {
 
 
 
-function printHeader() {
-	console.log(
-		'\n' +
-		chalk.blueBright(
-			figlet.textSync('SAZSKE', {
-				font: 'Graffiti',
-				horizontalLayout: 'default',
-				verticalLayout: 'default'
-			})
-		) + '\n'
-	);
+const run = async () => {
+	printHeader();
+	
+	let data = {};
+	data = await setInitialOptions();
+
+	if (data.type_proyect === 'big') {
+		if (data.bootstrap === 'yes') {
+			let response = await setBigYesBootstrapOptions();
+			data = { ...data, ...response, jquery: 'included' };
+		} else {
+			let response = await setBigNoBootstrapOptions();
+			data = { ...data, ...response };
+		}
+	} 
+
+	if (data.type_proyect === 'small') {
+		if (data.bootstrap === 'yes') {
+			data = { ...data, jquery: 'included' };
+		} else {
+			let response = await setSmallNoBootstrapOptions();
+			data = { ...data, ...response };
+		}
+	}
+	
+	data.proyect_name = slug(data.proyect_name);
+
+	createSkeleton(data);
 };
 
 
 
 
 
-function printFinalMessage(message, type) {
-	if (type === 'success') {
-		console.log(
-			'\n' + chalk.white.bgGreen.bold(message)
-		);
-	} else if (type === 'error') {
-		console.log(
-			'\n' + chalk.white.bgRed.bold(message)
-		);
-	} else {
-		console.log(
-			'\n' + chalk.white.bold(message)
-		);
-	}
-}
+run();
