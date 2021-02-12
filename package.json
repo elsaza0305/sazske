@@ -1,6 +1,6 @@
 {
   "name": "sazske-create",
-  "version": "1.1.2",
+  "version": "1.1.11",
   "description": "Skeleton generator for workflow frontend development",
   "main": "index.js",
   "scripts": {
