@@ -84,7 +84,9 @@ gulp.task('clean-dist', () => {
 		.src(dist, {
 			allowEmpty: true
 		})
-		.pipe(clean());
+		.pipe(clean({
+			force: true
+		}));
 });
 // END::Clean Dist
 

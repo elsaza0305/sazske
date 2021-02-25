@@ -84,7 +84,9 @@ gulp.task('clean-dist', () => {
 		.src(dist, {
 			allowEmpty: true
 		})
-		.pipe(clean());
+		.pipe(clean({
+			force: true
+		}));
 });
 // END::Clean Dist
 
@@ -97,7 +99,7 @@ gulp.task('compile-nunjucks', () => {
     return gulp
     	.src(`${src.views}/pages/*.njk`)
     	.pipe(nunjucks({
-    		path: [`${src.views}/templates/`], // String or Array
+    		path: [src.views], // String or Array
     		ext: '.html'
     	}))
         .pipe(gulp.dest(dist))
