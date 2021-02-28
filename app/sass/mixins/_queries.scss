@@ -1,0 +1,85 @@
+// Media Queries for General Sizes
+@mixin max-xs {
+    @media (max-width: $xs) {
+        @content;
+    }
+}
+
+@mixin max-sm {
+    @media (max-width: $sm) {
+        @content;
+    }
+}
+
+@mixin max-md {
+    @media (max-width: $md) {
+        @content;
+    }
+}
+
+@mixin max-lg {
+    @media (max-width: $lg) {
+        @content;
+    }
+}
+
+@mixin max-xl {
+    @media (max-width: $xl) {
+        @content;
+    }
+}
+
+@mixin min-xs {
+    @media (min-width: $xs) {
+        @content;
+    }
+}
+
+@mixin min-sm {
+    @media (min-width: $sm) {
+        @content;
+    }
+}
+
+@mixin min-md {
+    @media (min-width: $md) {
+        @content;
+    }
+}
+
+@mixin min-lg {
+    @media (min-width: $lg) {
+        @content;
+    }
+}
+
+@mixin min-xl {
+    @media (min-width: $xl) {
+        @content;
+    }
+}
+
+// Media Queries for Min Width, Max Width, Min Height and Max Height
+@mixin minw($width) {
+	@media (min-width: #{$width}) {
+		@content;
+	}
+}
+
+@mixin maxw($width) {
+	@media (max-width: #{$width}) {
+		@content;
+	}
+}
+
+@mixin minh($height) {
+	@media (min-height: #{$height}) {
+		@content;
+	}
+}
+
+@mixin maxh($height) {
+	@media (max-height: #{$height}) {
+		@content;
+	}
+}

@@ -1,0 +1,111 @@
+.position--static {
+	position: static !important;
+}
+
+.position--relative {
+	position: relative !important;
+}
+
+.position--absolute {
+	position: absolute !important;
+}
+
+.position--fixed {
+	position: fixed !important;
+}
+
+.position--sticky {
+	position: sticky !important;
+}
+
+.position--relative,
+.position--absolute,
+.position--fixed,
+.position--sticky {
+	@for $i from 1 through 10 {
+		&.top--#{$i} {
+			top: #{$i * 10}px;
+		}
+
+		&.right--#{$i} {
+			right: #{$i * 10}px;
+		}
+
+		&.bottom--#{$i} {
+			bottom: #{$i * 10}px;
+		}
+
+		&.left--#{$i} {
+			left: #{$i * 10}px;
+		}
+	}
+}
+
+.position--relative,
+.position--absolute,
+.position--fixed,
+.position--sticky {
+	&.top--inherit {
+		top: inherit !important;
+	}
+	
+	&.top--auto {
+		top: auto !important;
+	}
+	
+	&.top--unset {
+		top: unset !important;
+	}
+	
+	&.top--initial {
+		top: initial !important;
+	}
+	
+	&.right--inherit {
+		right: inherit !important;
+	}
+	
+	&.right--auto {
+		right: auto !important;
+	}
+	
+	&.right--unset {
+		right: unset !important;
+	}
+	
+	&.right--initial {
+		right: initial !important;
+	}
+	
+	&.bottom--inherit {
+		bottom: inherit !important;
+	}
+	
+	&.bottom--auto {
+		bottom: auto !important;
+	}
+	
+	&.bottom--unset {
+		bottom: unset !important;
+	}
+	
+	&.bottom--initial {
+		bottom: initial !important;
+	}
+	
+	&.left--inherit {
+		left: inherit !important;
+	}
+	
+	&.left--auto {
+		left: auto !important;
+	}
+	
+	&.left--unset {
+		left: unset !important;
+	}
+	
+	&.left--initial {
+		left: initial !important;
+	}
+}

@@ -1,0 +1,65 @@
+@for $i from 1 through 10 {
+	.mt--#{$i} {
+		margin-top: #{$i * 10}px !important;
+	}
+
+	.mb--#{$i} {
+		margin-bottom: #{$i * 10}px !important;
+	}
+
+	.my--#{$i} {
+		margin-bottom: #{$i * 10}px !important;
+		margin-top: #{$i * 10}px !important;
+	}
+
+	.mr--#{$i} {
+		margin-right: #{$i * 10}px !important;
+	}
+
+	.ml--#{$i} {
+		margin-left: #{$i * 10}px !important;
+	}
+
+	.mx--#{$i} {
+		margin-left: #{$i * 10}px !important;
+		margin-right: #{$i * 10}px !important;
+	}
+
+	.pt--#{$i} {
+		padding-top: #{$i * 10}px !important;
+	}
+
+	.pb--#{$i} {
+		padding-bottom: #{$i * 10}px !important;
+	}
+
+	.py--#{$i} {
+		padding-bottom: #{$i * 10}px !important;
+		padding-top: #{$i * 10}px !important;
+	}
+
+	.pr--#{$i} {
+		padding-right: #{$i * 10}px !important;
+	}
+
+	.pl--#{$i} {
+		padding-left: #{$i * 10}px !important;
+	}
+
+	.px--#{$i} {
+		padding-left: #{$i * 10}px !important;
+		padding-right: #{$i * 10}px !important;
+	}
+}
+
+.m--auto {
+	margin: auto !important;
+}
+
+.mx--auto {
+	margin: 0 auto !important;
+}
+
+.my--auto {
+	margin: auto 0 !important;
+}

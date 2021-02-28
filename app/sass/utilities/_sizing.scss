@@ -1,0 +1,29 @@
+$i: 10;
+
+@while $i <= 100 {
+	.width--#{$i} {
+		width: #{$i + '%'};
+	}
+
+	.height--#{$i} {
+		height: #{$i + '%'};
+	}
+
+	.max-width--#{$i} {
+		max-width: #{$i + '%'};
+	}
+
+	.max-height--#{$i} {
+		max-height: #{$i + '%'};
+	}
+
+	.min-width--#{$i} {
+		min-width: #{$i + '%'};
+	}
+
+	.min-height--#{$i} {
+		min-height: #{$i + '%'};
+	}
+
+	$i: $i + 10;
+}

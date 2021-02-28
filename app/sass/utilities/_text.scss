@@ -1,0 +1,14 @@
+$aligns: right, left, center, justify;
+$transforms: uppercase, lowercase, capitalize, none;
+
+@each $align in $aligns {
+	.text-align--#{$align} {
+		text-align: $align;
+	}
+}
+
+@each $transform in $transforms {
+	.text-transform--#{$transform} {
+		text-transform: $transform;
+	}
+}

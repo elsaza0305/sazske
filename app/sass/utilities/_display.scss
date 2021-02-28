@@ -1,0 +1,49 @@
+$displays: block, flex, inline, inline-block, inline-flex, none;
+$jcontents: center, end, flex-end, flex-start, left, right, safe, space-around, space-between, space-evenly, start, stretch, unsafe, inherit, initial, unset;
+$jselfs: auto, center, end, flex-end, flex-start, left, normal, right, save, self-end, self-start, start, stretch, unsave, inherit, initial, unset;
+$jitems: auto, center, end, flex-end, flex-start, left, legacy, normal, right, save, self-end, self-start, start, stretch, unsave, inherit, initial, unset;
+$acontents: center, flex-end, flex-start, space-around, space-between, stretch, inherit, initial, unset;
+$aselfs: auto, center, flex-end, flex-start, stretch, inherit, initial, unset;
+$aitems: center, flex-end, flex-start, stretch, inherit, initial, unset;
+
+@each $display in $displays {
+	.display--#{$display} {
+		display: $display;
+	}
+}
+
+@each $jcontent in $jcontents {
+	.justify-content--#{$jcontent} {
+		justify-content: $jcontent;
+	}
+}
+
+@each $jself in $jselfs {
+	.justify-self--#{$jself} {
+		justify-self: $jself;
+	}
+}
+
+@each $jitem in $jitems {
+	.justify-items--#{$jitem} {
+		justify-items: $jitem;
+	}
+}
+
+@each $acontent in $acontents {
+	.align-content--#{$acontent} {
+		align-content: $acontent;
+	}
+}
+
+@each $aself in $aselfs {
+	.align-self--#{$aself} {
+		align-self: $aself;
+	}
+}
+
+@each $aitem in $aitems {
+	.align-items--#{$aitem} {
+		align-items: $aitem;
+	}
+}

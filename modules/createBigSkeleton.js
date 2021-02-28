@@ -20,7 +20,9 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Validate folder name
+	/**
+	 * Validate folder name
+	 */
 	const validateFolder = validateFolderName(path__proyect, proyect_name);
 	if (!validateFolder) return false;
 
@@ -28,7 +30,9 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Create Folders
+	/**
+	 * Create Folders 
+	 */
 	shelljs.mkdir('-p', [
 		`${path__proyect}/src/assets/images`,
 		`${path__proyect}/src/assets/files`,
@@ -37,6 +41,7 @@ const createBigSkeleton = (data) => {
 		`${path__proyect}/src/js/functions`,
 		`${path__proyect}/src/js/modules`,
 		`${path__proyect}/src/js/vendor`,
+		`${path__proyect}/src/${path__proyect__SASS}/base`,
 		`${path__proyect}/src/${path__proyect__SASS}/components`,
 		`${path__proyect}/src/${path__proyect__SASS}/extends`,
 		`${path__proyect}/src/${path__proyect__SASS}/fonts`,
@@ -63,7 +68,9 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Add JQuery
+	/**
+	 * Add JQuery
+	 */
 	if (jquery === 'yes') {
 		// Copy file [ jquery.min.js ]
 		shelljs.cp(`${path__node}/jquery/dist/jquery.min.js`, `${path__proyect}/src/js/vendor`);
@@ -73,7 +80,9 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Add Bootstrap
+	/**
+	 * Add Bootstrap or Normalize.css
+	 */
 	if (bootstrap === 'yes') {
 		// Copy file [ bootstrap.css ]
 		shelljs.cp(`${path__node}/bootstrap/dist/css/bootstrap.css`, `${path__proyect}/src/${path__proyect__SASS}/vendor`);
@@ -104,33 +113,72 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Create SASS files
+	/**
+	 * Create SASS files
+	 */
+	if (bootstrap === 'yes') {
+		shelljs.touch([
+			`${path__proyect}/src/${path__proyect__SASS}/_base${sass_ext}`,
+			`${path__proyect}/src/${path__proyect__SASS}/_mixins${sass_ext}`,
+			`${path__proyect}/src/${path__proyect__SASS}/_utilities${sass_ext}`,
+			`${path__proyect}/src/${path__proyect__SASS}/_variables${sass_ext}`
+		]);
+	}
+
+	if (bootstrap == 'no') {
+		shelljs.cp(`${path__app}/sass/base/_global${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/base`);
+		shelljs.cp(`${path__app}/sass/mixins/_queries${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/mixins`);
+		shelljs.cp(`${path__app}/sass/utilities/_classes${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_display${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_grid${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_opacity${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_positions${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_sizing${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_spacing${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_text${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/utilities/_visibility${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/utilities`);
+		shelljs.cp(`${path__app}/sass/variables/_breakpoints${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/variables`);
+		shelljs.cp(`${path__app}/sass/variables/_colors${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}/variables`);
+
+		shelljs.cp(`${path__app}/sass/_base${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
+		shelljs.cp(`${path__app}/sass/_mixins${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
+		shelljs.cp(`${path__app}/sass/_utilities${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
+		shelljs.cp(`${path__app}/sass/_variables${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
+	}
+
 	shelljs.touch([
 		`${path__proyect}/src/${path__proyect__SASS}/_components${sass_ext}`,
 		`${path__proyect}/src/${path__proyect__SASS}/_extends${sass_ext}`,
 		`${path__proyect}/src/${path__proyect__SASS}/_fonts${sass_ext}`,
 		`${path__proyect}/src/${path__proyect__SASS}/_layout${sass_ext}`,
-		`${path__proyect}/src/${path__proyect__SASS}/_mixins${sass_ext}`,
-		`${path__proyect}/src/${path__proyect__SASS}/_utilities${sass_ext}`,
-		`${path__proyect}/src/${path__proyect__SASS}/_pages${sass_ext}`,
-		`${path__proyect}/src/${path__proyect__SASS}/_variables${sass_ext}`
+		`${path__proyect}/src/${path__proyect__SASS}/_pages${sass_ext}`
 	]);
 
-	// Copy SASS file [ stylesheet ]
+
+
+
+
+	/**
+	 * Copy SASS file [ stylesheet ]
+	 */
 	shelljs.cp(`${path__app}/sass/stylesheet${sass_ext}`, `${path__proyect}/src/${path__proyect__SASS}`);
 
 
 
 
 
-	// Copy JS File
+	/**
+	 * Copy JS File
+	 */
 	shelljs.cp(`${path__app}/js/app.js`, `${path__proyect}/src/js`);
 
 
 
 
 
-	// Create Index File
+	/**
+	 * Create Index File
+	 */
 	if (html_pcs === 'EJS') {
 		if (bootstrap === 'yes') {
 			shelljs.cp(`${path__app}/pages/ejs/bootstrap/head.ejs`, `${path__proyect}/src/views/partials`);
@@ -182,7 +230,9 @@ const createBigSkeleton = (data) => {
 	
 
 
-	// Add ENV file
+	/**
+	 * Add ENV file
+	 */
 	shelljs.cp(`${path__app}/env/${sass_ext.substring(1, 5)}.env`, `${path__proyect}`);
 	// Rename -> [ .env ]
 	shelljs.mv(`${path__proyect}/${sass_ext.substring(1, 5)}.env`, `${path__proyect}/.env`);
@@ -191,21 +241,27 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Add Editor Config
+	/**
+	 * Add Editor Config
+	 */
 	shelljs.cp(`${path__app}/.editorconfig`, `${path__proyect}`);
 
 
 
 
 
-	// Add README
+	/**
+	 * Add README
+	 */
 	shelljs.cp(`${path__app}/README.md`, `${path__proyect}`);
 
 
 
 
 
-	// Add package.json
+	/**
+	 *  Add package.json
+	 */
 	shelljs.cp(`${path__app}/package/package-${html_pcs}.json`, `${path__proyect}`);
 	// Rename -> [ package.json ]
 	shelljs.mv(`${path__proyect}/package-${html_pcs}.json`, `${path__proyect}/package.json`);
@@ -214,7 +270,9 @@ const createBigSkeleton = (data) => {
 
 
 
-	// Add Gulpfile
+	/**
+	 * / Add Gulpfile
+	 */
 	shelljs.cp(`${path__app}/gulp/gulpfile-${html_pcs}.js`, `${path__proyect}`);
 	// Rename -> [ gulpfile.json ]
 	shelljs.mv(`${path__proyect}/gulpfile-${html_pcs}.js`, `${path__proyect}/gulpfile.js`);

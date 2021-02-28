@@ -19,7 +19,9 @@ const createSmallSkeleton = (data) => {
 
 
 
-	// Validate folder name
+	/**
+	 * Validate folder name
+	 */
 	const validateFolder = validateFolderName(path__proyect, proyect_name);
 	if (!validateFolder) return false;
 
@@ -27,7 +29,9 @@ const createSmallSkeleton = (data) => {
 
 
 
-	// Create Folders
+	/**
+	 *  Create Folders
+	 */
 	shelljs.mkdir('-p', [
 		`${path__proyect}/assets/images`,
 		`${path__proyect}/assets/files`,
@@ -41,7 +45,9 @@ const createSmallSkeleton = (data) => {
 
 
 
-	// Add JQuery
+	/**
+	 * Add JQuery
+	 */
 	if (jquery === 'yes') {
 		// Copy file [ jquery.min.js ]
 		shelljs.cp(`${path__node}/jquery/dist/jquery.min.js`, `${path__proyect}/assets/js`);
@@ -51,7 +57,9 @@ const createSmallSkeleton = (data) => {
 
 
 
-	// Add Bootstrap
+	/**
+	 * Add Bootstrap or Normalize
+	 */
 	if (bootstrap === 'yes') {
 		// Copy file [ bootstrap.css ]
 		shelljs.cp(`${path__node}/bootstrap/dist/css/bootstrap.min.css`, `${path__proyect}/assets/css`);
@@ -70,21 +78,27 @@ const createSmallSkeleton = (data) => {
 
 
 
-	// Create JS File
+	/**
+	 * Create JS File
+	 */
 	shelljs.touch(`${path__proyect}/assets/js/main.js`);
 
 
 
 
 
-	// Create CSS File
-	shelljs.touch(`${path__proyect}/assets/css/stylesheet.css`);
+	/**
+	 * Create CSS File
+	 */
+	shelljs.cp(`${path__app}/css/stylesheet.css`, `${path__proyect}/assets/css`);
 
 
 
 
 	
-	// Create Index File
+	/**
+	 * Create Index File
+	 */
 	if (bootstrap === 'yes') {
 		shelljs.cp(`${path__app}/pages/small/bootstrap/index.html`, path__proyect);
 	} else if (jquery === 'yes') {
@@ -97,14 +111,18 @@ const createSmallSkeleton = (data) => {
 
 
 
-	// Add Editor Config
+	/**
+	 * Add Editor Config
+	 */
 	shelljs.cp(`${path__app}/.editorconfig`, `${path__proyect}`);
 
 
 
 
 
-	// Add README
+	/**
+	 * Add README
+	 */
 	shelljs.cp(`${path__app}/README.md`, `${path__proyect}`);
 
 

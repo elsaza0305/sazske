@@ -1,0 +1,153 @@
+.grid {
+	display: grid;
+	grid-template-rows: 1fr;
+
+	@for $i from 1 through 10 {
+		&.gap--#{$i} {
+			column-gap: #{$i * 10}px;
+			row-gap: #{$i * 10}px;
+		}
+
+		&.gap-sm--#{$i} {
+			@include min-sm {
+				column-gap: #{$i * 10}px;
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-md--#{$i} {
+			@include min-md {
+				column-gap: #{$i * 10}px;
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-lg--#{$i} {
+			@include min-lg {
+				column-gap: #{$i * 10}px;
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-xl--#{$i} {
+			@include min-xl {
+				column-gap: #{$i * 10}px;
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-x--#{$i} {
+			column-gap: #{$i * 10}px;
+		}
+
+		&.gap-sm-x--#{$i} {
+			@include min-sm {
+				column-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-md-x--#{$i} {
+			@include min-md {
+				column-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-lg-x--#{$i} {
+			@include min-lg {
+				column-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-xl-x--#{$i} {
+			@include min-xl {
+				column-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-y--#{$i} {
+			row-gap: #{$i * 10}px;
+		}
+
+		&.gap-sm-y--#{$i} {
+			@include min-sm {
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-md-y--#{$i} {
+			@include min-md {
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-lg-y--#{$i} {
+			@include min-lg {
+				row-gap: #{$i * 10}px;
+			}
+		}
+
+		&.gap-xl-y--#{$i} {
+			@include min-xl {
+				row-gap: #{$i * 10}px;
+			}
+		}
+  	}
+
+	@for $i from 1 through 12 {
+		&.cols--#{$i} {
+			grid-template-columns: repeat(($i), 1fr);
+		}
+
+		&.cols-sm--#{$i} {
+			@include min-sm {
+				grid-template-columns: repeat(($i), 1fr);
+			}
+		}
+
+		&.cols-md--#{$i} {
+			@include min-md {
+				grid-template-columns: repeat(($i), 1fr);
+			}
+		}
+
+		&.cols-lg--#{$i} {
+			@include min-lg {
+				grid-template-columns: repeat(($i), 1fr);
+			}
+		}
+
+		&.cols-xl--#{$i} {
+			@include min-xl {
+				grid-template-columns: repeat(($i), 1fr);
+			}
+		}
+
+		.col-span--#{$i} {
+			grid-column: span ($i) / span ($i);
+		}
+
+		.col-span-sm--#{$i} {
+			@include min-sm {
+				grid-column: span ($i) / span ($i);
+			}
+		}
+
+		.col-span-md--#{$i} {
+			@include min-md {
+				grid-column: span ($i) / span ($i);
+			}
+		}
+
+		.col-span-lg--#{$i} {
+			@include min-lg {
+				grid-column: span ($i) / span ($i);
+			}
+		}
+
+		.col-span-xl--#{$i} {
+			@include min-xl {
+				grid-column: span ($i) / span ($i);
+			}
+		}
+  	}
+}
