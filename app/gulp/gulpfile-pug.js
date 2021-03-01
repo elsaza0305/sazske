@@ -20,6 +20,7 @@ const concat = require('gulp-concat');
 
 const browserSync = require('browser-sync');
 const server = browserSync.create();
+const tunnel = process.env.TUNNEL_DEV || 'true';
 
 
 
@@ -46,13 +47,22 @@ const dist = `${process.env.PATH_DIST}` || './dist';
 
 // Development Server
 gulp.task('server', () => {
-	server.init({
-		notify: false,
-		online: true,
-		server: dist,
-		tunnel: process.env.PROYECT_TITLE || 'sazske-proyect',
-		port: process.env.PORT_DEV || 5050
-	});
+	if (tunnel == 'true') {
+		server.init({
+			notify: false,
+			online: true,
+			server: dist,
+			tunnel: process.env.PROYECT_TITLE || 'sazske-proyect',
+			port: process.env.PORT_DEV || 5050
+		});
+	} else {
+		server.init({
+			notify: false,
+			online: true,
+			server: dist,
+			port: process.env.PORT_DEV || 5050
+		});
+	}
 });
 // END::Development Server
 
