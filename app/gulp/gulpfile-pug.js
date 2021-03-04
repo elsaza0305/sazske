@@ -75,7 +75,7 @@ gulp.task('watching', () => {
 	gulp.watch(`${src.views}/**/*.pug`, gulp.series('compile-pug'));
 	gulp.watch(`${src.sass}/**/*.${process.env.SASS_EXT}`, gulp.series('compile-SASS'));
 	gulp.watch(`${src.js}/vendor/**/*.js`, gulp.series('js-vendor'));
-	gulp.watch([`${src.js}/modules/**/*.js`, `${src.js}/app.js`, `${src.js}/functions/**/*.js`], gulp.series('js-app'));
+	gulp.watch([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`], gulp.series('js-app'));
 	gulp.watch(`${src.data}/*`, gulp.series('copy-data'));
 	gulp.watch(`${src.fonts}/*`, gulp.series('copy-fonts'));
 	gulp.watch(`${src.files}/*`, gulp.series('copy-files'));
