@@ -38,8 +38,8 @@ const createBigSkeleton = (data) => {
 		`${path__proyect}/src/assets/files`,
 		`${path__proyect}/src/assets/fonts`,
 		`${path__proyect}/src/data`,
-		`${path__proyect}/src/js/functions`,
-		`${path__proyect}/src/js/modules`,
+		`${path__proyect}/src/js/app/functions`,
+		`${path__proyect}/src/js/app/modules`,
 		`${path__proyect}/src/js/vendor`,
 		`${path__proyect}/src/${path__proyect__SASS}/base`,
 		`${path__proyect}/src/${path__proyect__SASS}/components`,
@@ -170,7 +170,7 @@ const createBigSkeleton = (data) => {
 	/**
 	 * Copy JS File
 	 */
-	shelljs.cp(`${path__app}/js/app.js`, `${path__proyect}/src/js`);
+	shelljs.cp(`${path__app}/js/app.js`, `${path__proyect}/src/js/app`);
 
 
 

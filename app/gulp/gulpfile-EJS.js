@@ -165,7 +165,7 @@ gulp.task('js-vendor', () => {
 
 gulp.task('js-app', () => {
 	return gulp
-		.src([`${src.js}/modules/**/*.js`, `${src.js}/app.js`, `${src.js}/functions/**/*.js`])
+		.src([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`])
         .pipe(maps.init())
 		.pipe(concat('main.min.js'))
 		.pipe(uglify())
