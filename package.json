@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elsaza0305/sazske.git"
+    "url": "git+https://github.com/elsaza0305/sazske-create.git"
   },
   "keywords": [
     "autoprefixer",
@@ -29,9 +29,9 @@
   "author": "Dayron Daza",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elsaza0305/sazske/issues"
+    "url": "https://github.com/elsaza0305/sazske-create/issues"
   },
-  "homepage": "https://github.com/elsaza0305/sazske#readme",
+  "homepage": "https://github.com/elsaza0305/sazske-create#readme",
   "dependencies": {
     "bootstrap": "^4.6.0",
     "chalk": "^4.1.0",
