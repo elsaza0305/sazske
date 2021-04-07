@@ -1,3 +1,13 @@
+/**
+ * --------------------------------------------------------------------
+ * Sazske Create
+ * --------------------------------------------------------------------
+ */
+
+
+
+
+
 require('dotenv').config();
 
 const gulp = require('gulp');
@@ -24,26 +34,31 @@ const tunnel = process.env.TUNNEL_DEV || 'true';
 
 
 
-// Routes
+/**
+ * Routes
+ */
 const src = {
+	src : `./src`,
+	sass : `./src/${process.env.SASS_EXT}`,
+	views: `./src/${process.env.PATH_VIEWS}` || `./src/views`,
+	js : `./src/${process.env.PATH_JS}` || `./src/js`,
 	data: `./src/${process.env.PATH_DATA}` || `./src/data`,
+	img : `./src/${process.env.PATH_IMAGES}` || `./src/assets/images`,
 	fonts : `./src/${process.env.PATH_FONTS}` || `./src/assets/fonts`,
 	files : `./src/${process.env.PATH_FILES}` || `./src/assets/files`,
-	img : `./src/${process.env.PATH_IMAGES}` || `./src/assets/images`,
-	js : `./src/${process.env.PATH_JS}` || `./src/js`,
-	sass : `./src/${process.env.SASS_EXT}`,
-	src : `./src`,
-	views: `./src/${process.env.PATH_VIEWS}` || `./src/views`,
+	sounds : `./src/${process.env.PATH_SOUNDS}` || `./src/assets/sounds`,
+	videos : `./src/${process.env.PATH_VIDEOS}` || `./src/assets/videos`,
 }
 
 const dist = `${process.env.PATH_DIST}` || './dist';
-// END::Routes
 
 
 
 
 
-// Development Server
+/**
+ * Run development server
+ */
 gulp.task('server', () => {
 	if (tunnel == 'true') {
 		server.init({
@@ -62,31 +77,34 @@ gulp.task('server', () => {
 		});
 	}
 });
-// END::Development Server
 
 
 
 
 
-// Watching Files Changed
+/**
+ * Watching files changed
+ */
 gulp.task('watching', () => {
 	gulp.watch(`${src.views}/**/*.html`, gulp.series('copy-html'));
-	gulp.watch(`${src.sass}/**/*.${process.env.SASS_EXT}`, gulp.series('compile-SASS'));
+	gulp.watch(`${src.sass}/**/*.${process.env.SASS_EXT}`, gulp.series('compile-sass'));
 	gulp.watch(`${src.js}/vendor/**/*.js`, gulp.series('js-vendor'));
 	gulp.watch([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`], gulp.series('js-app'));
-	gulp.watch(`${src.data}/*`, gulp.series('copy-data'));
-	gulp.watch(`${src.fonts}/*`, gulp.series('copy-fonts'));
-	gulp.watch(`${src.files}/*`, gulp.series('copy-files'));
-	gulp.watch(`${src.img}/**/*`, gulp.series('copy-images'));
-	
+	gulp.watch(`${src.data}/**/*`, gulp.series('copy-data'));
+	gulp.watch(`${src.img}/**/*`, gulp.series('copy-images'));	
+	gulp.watch(`${src.fonts}/**/*`, gulp.series('copy-fonts'));
+	gulp.watch(`${src.files}/**/*`, gulp.series('copy-files'));
+	gulp.watch(`${src.sounds}/**/*`, gulp.series('copy-sounds'));
+	gulp.watch(`${src.videos}/**/*`, gulp.series('copy-videos'));
 });
-// END::Watching Files Changed
 
 
 
 
 
-// Clean Dist
+/**
+ * Clean files in folder dist
+ */
 gulp.task('clean-dist', () => {
 	return gulp
 		.src(dist, {
@@ -96,27 +114,29 @@ gulp.task('clean-dist', () => {
 			force: true
 		}));
 });
-// END::Clean Dist
 
 
 
 
 
-// Copy HTML
+/**
+ * Copy HTML
+ */
 gulp.task('copy-html', () => {
     return gulp
     	.src(`${src.views}/*.html`)
         .pipe(gulp.dest(dist))
         .pipe(server.stream());
 });
-// END::Copy HTML
 
 
 
 
 
-// Compile SASS
-gulp.task('compile-SASS', () => {
+/**
+ * Compile Sass
+ */
+gulp.task('compile-sass', () => {
 	const processors = [
 		mq4.postprocessorFor({
 			hoverSelectorPrefix: '.is-true-hover '
@@ -139,15 +159,15 @@ gulp.task('compile-SASS', () => {
 		.pipe(maps.write('.'))
 		.pipe(gulp.dest(`${dist}/assets/css`))
 		.pipe(server.stream());
-
 });
-// END::Compile SASS
 
 
 
 
 
-// Tasks JS
+/**
+ * Copy JS vendor
+ */
 gulp.task('js-vendor', () => {
 	return gulp
 		.src(`${src.js}/vendor/**/*.js`)
@@ -155,77 +175,140 @@ gulp.task('js-vendor', () => {
         .pipe(server.stream());
 });
 
+
+
+
+
+/**
+ * Compile JS app
+ */
 gulp.task('js-app', () => {
 	return gulp
 		.src([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`])
         .pipe(maps.init())
-		.pipe(concat('main.min.js'))
+		.pipe(concat('app.min.js'))
 		.pipe(uglify())
         .pipe(maps.write('.'))
         .pipe(gulp.dest(`${dist}/assets/js`))
         .pipe(server.stream());
 });
-// END::Tasks JS
 
 
 
 
 
-// Copy Data
+/**
+ * Copy data
+ */
 gulp.task('copy-data', () => {
 	return gulp
 		.src(`${src.data}/**/*`)
 		.pipe(gulp.dest(`${dist}/assets/data`))
 		.pipe(server.stream());
 });
-// END::Copy Data
 
 
 
 
 
-// Copy Images
+/**
+ * Copy images
+ */
 gulp.task('copy-images', () => {
 	return gulp
 		.src(`${src.img}/**/*`)
-		.pipe(gulp.dest(`${dist}/assets/img`))
+		.pipe(gulp.dest(`${dist}/assets/images`))
 		.pipe(server.stream());
 });
-// END::Copy Images
 
 
 
 
 
-// Copy Fonts
+/**
+ * Copy fonts
+ */
 gulp.task('copy-fonts', () => {
 	return gulp
 		.src(`${src.fonts}/**/*`)
 		.pipe(gulp.dest(`${dist}/assets/fonts`))
 		.pipe(server.stream());
 });
-// END::Copy Fonts
 
 
 
 
 
-// Copy Files
+/**
+ * Copy files
+ */
 gulp.task('copy-files', () => {
 	return gulp
 		.src(`${src.files}/**/*`)
 		.pipe(gulp.dest(`${dist}/assets/files`))
 		.pipe(server.stream());
 });
-// END::Copy Files
 
 
 
 
 
-// Create Dist Folder
-gulp.task('development', gulp.series('clean-dist', 'copy-html', 'compile-SASS', 'js-vendor', 'js-app', 'copy-data', 'copy-images', 'copy-fonts', 'copy-files'));
+/**
+ * Copy sounds 
+ */
+gulp.task('copy-sounds', () => {
+	return gulp
+		.src(`${src.sounds}/**/*`)
+		.pipe(gulp.dest(`${dist}/assets/sounds`))
+		.pipe(server.stream());
+});
 
 
-// Start Development
-gulp.task('default', gulp.series('development', gulp.parallel('server', 'watching')));
+
+
+
+/**
+ * Copy videos
+ */
+gulp.task('copy-videos', () => {
+	return gulp
+		.src(`${src.videos}/**/*`)
+		.pipe(gulp.dest(`${dist}/assets/videos`))
+		.pipe(server.stream());
+});
+
+
+
+
+
+/**
+ * Create dist folder
+ */
+gulp.task('development',
+	gulp.series(
+		'clean-dist',
+		'copy-html',
+		'compile-sass',
+		'js-vendor',
+		'js-app',
+		'copy-data',
+		'copy-images',
+		'copy-fonts',
+		'copy-files',
+		'copy-sounds',
+		'copy-videos'
+	)
+);
+
+
+/**
+ * Start development
+ */
+gulp.task('default',
+	gulp.series('development',
+		gulp.parallel(
+			'server',
+			'watching'
+		)
+	)
+);

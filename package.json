@@ -1,5 +1,5 @@
 {
-  "name": "sazske-create",
+  "name": "yela-create",
   "version": "1.3.4",
   "description": "Skeleton generator for workflow frontend development",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/elsaza0305/sazske-create.git"
+    "url": "git+https://github.com/elsaza0305/yela-create.git"
   },
   "keywords": [
     "autoprefixer",
@@ -29,9 +29,9 @@
   "author": "Dayron Daza",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/elsaza0305/sazske-create/issues"
+    "url": "https://github.com/elsaza0305/yela-create/issues"
   },
-  "homepage": "https://github.com/elsaza0305/sazske-create#readme",
+  "homepage": "https://github.com/elsaza0305/yela-create#readme",
   "dependencies": {
     "bootstrap": "^4.6.0",
     "chalk": "^4.1.0",

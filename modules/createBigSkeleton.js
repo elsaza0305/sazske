@@ -37,6 +37,8 @@ const createBigSkeleton = (data) => {
 		`${path__proyect}/src/assets/images`,
 		`${path__proyect}/src/assets/files`,
 		`${path__proyect}/src/assets/fonts`,
+		`${path__proyect}/src/assets/videos`,
+		`${path__proyect}/src/assets/sounds`,
 		`${path__proyect}/src/data`,
 		`${path__proyect}/src/js/app/functions`,
 		`${path__proyect}/src/js/app/modules`,
@@ -260,7 +262,7 @@ const createBigSkeleton = (data) => {
 
 
 	/**
-	 *  Add package.json
+	 * Add package.json
 	 */
 	shelljs.cp(`${path__app}/package/package-${html_pcs}.json`, `${path__proyect}`);
 	// Rename -> [ package.json ]
@@ -271,11 +273,22 @@ const createBigSkeleton = (data) => {
 
 
 	/**
-	 * / Add Gulpfile
+	 * Add Gulpfile
 	 */
 	shelljs.cp(`${path__app}/gulp/gulpfile-${html_pcs}.js`, `${path__proyect}`);
 	// Rename -> [ gulpfile.json ]
 	shelljs.mv(`${path__proyect}/gulpfile-${html_pcs}.js`, `${path__proyect}/gulpfile.js`);
+	
+
+
+
+
+	/**
+	 * Add Gitignore
+	 */
+	shelljs.cp(`${path__app}/gitignore.txt`, `${path__proyect}`);
+	// Rename -> [ .gitignore ]
+	shelljs.mv(`${path__proyect}/gitignore.txt`, `${path__proyect}/.gitignore`);
 
 
 

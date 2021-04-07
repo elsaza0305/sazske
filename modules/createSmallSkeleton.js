@@ -36,6 +36,8 @@ const createSmallSkeleton = (data) => {
 		`${path__proyect}/assets/images`,
 		`${path__proyect}/assets/files`,
 		`${path__proyect}/assets/fonts`,
+		`${path__proyect}/assets/videos`,
+		`${path__proyect}/assets/sounds`,
 		`${path__proyect}/assets/data`,
 		`${path__proyect}/assets/js`,
 		`${path__proyect}/assets/css`
