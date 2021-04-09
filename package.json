@@ -1,6 +1,6 @@
 {
   "name": "yela-create",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Skeleton generator for workflow frontend development",
   "main": "index.js",
   "scripts": {
