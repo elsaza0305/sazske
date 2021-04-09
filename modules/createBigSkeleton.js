@@ -233,6 +233,15 @@ const createBigSkeleton = (data) => {
 
 
 	/**
+	 * Add Favicon
+	 */
+	shelljs.cp(`${path__app}/images/favicon.ico`, `${path__proyect}/src/assets/images`);
+
+
+
+
+	
+	/**
 	 * Add ENV file
 	 */
 	shelljs.cp(`${path__app}/env/${sass_ext.substring(1, 5)}.env`, `${path__proyect}`);

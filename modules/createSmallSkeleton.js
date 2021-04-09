@@ -114,6 +114,15 @@ const createSmallSkeleton = (data) => {
 
 
 	/**
+	 * Add Favicon
+	 */
+	shelljs.cp(`${path__app}/images/favicon.ico`, `${path__proyect}/assets/images`);
+
+
+
+
+
+	/**
 	 * Add Editor Config
 	 */
 	shelljs.cp(`${path__app}/.editorconfig`, `${path__proyect}`);
