@@ -1,5 +1,5 @@
 {
-  "name": "sazske-proyect",
+  "name": "name-proyect",
   "version": "1.0.0",
   "description": "",
   "main": "gulpfile.js",
@@ -9,14 +9,13 @@
 	"dev": "npm run development"
   },
   "keywords": [
-	"sazske"
+	"yela-create"
   ],
   "author": "Your Name",
   "license": "ISC",
   "devDependencies": {
     "autoprefixer": "^9.8.6",
 	"browser-sync": "^2.26.13",
-	"cssnano": "^4.1.10",
 	"dotenv": "^8.2.0",
 	"gulp": "^4.0.2",
 	"gulp-clean": "^0.4.0",

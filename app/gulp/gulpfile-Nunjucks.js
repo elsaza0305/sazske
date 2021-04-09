@@ -1,6 +1,6 @@
 /**
  * --------------------------------------------------------------------
- * Sazske Create
+ * Yela Create
  * --------------------------------------------------------------------
  */
 
@@ -16,7 +16,6 @@ const sass = require('gulp-sass');
 const autoprefixer = require('autoprefixer');
 const mq4 = require('mq4-hover-shim');
 const postcss = require('gulp-postcss');
-const cssnano = require('cssnano');
 const pxtorem = require('postcss-pxtorem');
 
 const nunjucks = require('gulp-nunjucks-render');
@@ -41,7 +40,7 @@ const tunnel = process.env.TUNNEL_DEV || 'true';
  */
 const src = {
 	src : `./src`,
-	sass : `./src/${process.env.SASS_EXT}`,
+	sass : `./src/${process.env.SASS_INPUT}`,
 	views: `./src/${process.env.PATH_VIEWS}` || `./src/views`,
 	js : `./src/${process.env.PATH_JS}` || `./src/js`,
 	data: `./src/${process.env.PATH_DATA}` || `./src/data`,
@@ -67,7 +66,7 @@ gulp.task('server', () => {
 			notify: false,
 			online: true,
 			server: dist,
-			tunnel: process.env.PROYECT_TITLE || 'sazske-proyect',
+			tunnel: process.env.PROYECT_TITLE || 'yela-proyect',
 			port: process.env.PORT_DEV || 5050
 		});
 	} else {
@@ -89,7 +88,7 @@ gulp.task('server', () => {
  */
 gulp.task('watching', () => {
 	gulp.watch(`${src.views}/**/*.njk`, gulp.series('compile-nunjucks'));
-	gulp.watch(`${src.sass}/**/*.${process.env.SASS_EXT}`, gulp.series('compile-sass'));
+	gulp.watch(`${src.sass}/**/*.${process.env.SASS_INPUT}`, gulp.series('compile-sass'));
 	gulp.watch(`${src.js}/vendor/**/*.js`, gulp.series('js-vendor'));
 	gulp.watch([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`], gulp.series('js-app'));
 	gulp.watch(`${src.data}/**/*`, gulp.series('copy-data'));
@@ -152,16 +151,15 @@ gulp.task('compile-sass', () => {
 			mediaQuery: false,
 			replace: false
 		}),
-		autoprefixer({ overrideBrowserslist: ['last 1 version'] }),
-		cssnano()
+		autoprefixer({ overrideBrowserslist: ['last 1 version'] })
 	];
 
 	return gulp
-		.src(`${src.sass}/stylesheet.${process.env.SASS_EXT}`)
+		.src(`${src.sass}/stylesheet.${process.env.SASS_INPUT}`)
 		.pipe(maps.init())
-		.pipe(sass.sync({ outputStyle: 'compressed' }).on('error', sass.logError))
+		.pipe(sass.sync({ outputStyle: process.env.SASS_OUTPUT || 'compressed' }).on('error', sass.logError))
 		.pipe(postcss(processors))
-		.pipe(rename('stylesheet.min.css'))
+		.pipe(rename('stylesheet.css'))
 		.pipe(maps.write('.'))
 		.pipe(gulp.dest(`${dist}/assets/css`))
 		.pipe(server.stream());
@@ -189,14 +187,26 @@ gulp.task('js-vendor', () => {
  * Compile JS app
  */
 gulp.task('js-app', () => {
+	const minified = process.env.JS_MINIFIED || 'yes';
+
+	if (minified == 'no') {
+		return gulp
+			.src([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`])
+			.pipe(maps.init())
+			.pipe(concat('app.js'))
+			.pipe(maps.write('.'))
+			.pipe(gulp.dest(`${dist}/assets/js`))
+			.pipe(server.stream());	
+	}
+
 	return gulp
 		.src([`${src.js}/app/modules/**/*.js`, `${src.js}/app/app.js`, `${src.js}/app/functions/**/*.js`])
-        .pipe(maps.init())
-		.pipe(concat('app.min.js'))
+		.pipe(maps.init())
+		.pipe(concat('app.js'))
 		.pipe(uglify())
-        .pipe(maps.write('.'))
-        .pipe(gulp.dest(`${dist}/assets/js`))
-        .pipe(server.stream());
+		.pipe(maps.write('.'))
+		.pipe(gulp.dest(`${dist}/assets/js`))
+		.pipe(server.stream());
 });
 
 

@@ -81,9 +81,9 @@ const createSmallSkeleton = (data) => {
 
 
 	/**
-	 * Create JS File
+	 * Copy JS File
 	 */
-	shelljs.touch(`${path__proyect}/assets/js/main.js`);
+	shelljs.cp(`${path__app}/js/app.js`, `${path__proyect}/assets/js`);
 
 
 

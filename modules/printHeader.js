@@ -11,7 +11,7 @@ const printHeader = () => {
 	console.log(
 		'\n' +
 		chalk.blueBright(
-			figlet.textSync('SAZSKE', {
+			figlet.textSync('YELA', {
 				font: 'Graffiti',
 				horizontalLayout: 'default',
 				verticalLayout: 'default'

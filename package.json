@@ -43,6 +43,6 @@
     "slug": "^4.0.2"
   },
   "bin": {
-    "sazske-create": "index.js"
+    "yela-create": "index.js"
   }
 }
