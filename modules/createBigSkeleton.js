@@ -184,13 +184,15 @@ const createBigSkeleton = (data) => {
 	if (html_pcs === 'EJS') {
 		if (bootstrap === 'yes') {
 			shelljs.cp(`${path__app}/pages/ejs/bootstrap/head.ejs`, `${path__proyect}/src/views/partials`);
+			shelljs.cp(`${path__app}/pages/ejs/bootstrap/scripts.ejs`, `${path__proyect}/src/views/partials`);
 		} else if (jquery === 'yes') {
 			shelljs.cp(`${path__app}/pages/ejs/jquery/head.ejs`, `${path__proyect}/src/views/partials`);
+			shelljs.cp(`${path__app}/pages/ejs/jquery/scripts.ejs`, `${path__proyect}/src/views/partials`);
 		} else {
 			shelljs.cp(`${path__app}/pages/ejs/head.ejs`, `${path__proyect}/src/views/partials`);
+			shelljs.cp(`${path__app}/pages/ejs/scripts.ejs`, `${path__proyect}/src/views/partials`);
 		}
 
-		shelljs.cp(`${path__app}/pages/ejs/scripts.ejs`, `${path__proyect}/src/views/partials`);
 		shelljs.cp(`${path__app}/pages/ejs/index.ejs`, `${path__proyect}/src/views/pages`);
 	}
 
